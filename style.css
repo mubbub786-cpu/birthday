@@ -1,0 +1,171 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000000; /* Pure Black Screen */
+    color: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Main Borderless Screen Container */
+.fullscreen-animation-area {
+    width: 850px;
+    height: 500px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.workspace {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Start Screen Layout - Perfectly centered in the middle of the whole screen */
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* Small Pink Heart Trigger */
+.heart-trigger {
+    background: none;
+    border: none;
+    font-size: 3.5rem;
+    cursor: pointer;
+    outline: none;
+    animation: heartThrob 1.2s infinite ease-in-out;
+}
+
+.click-prompt {
+    font-family: 'Courier New', Courier, monospace;
+    color: #888;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Left Message Board text panel */
+.message-panel {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #ffffff;
+    padding-left: 20px;
+    opacity: 0; /* Hidden initially, fades in when tree shifts right */
+    transition: opacity 1s ease-in-out;
+}
+
+.message-panel.show {
+    opacity: 1;
+}
+
+.message-panel p {
+    min-height: 22px;
+    line-height: 1.4;
+}
+
+#l1 { color: #ffffff; }
+#l2 { color: #ff3366; }
+#l3 { color: #ffcc00; }
+#l4 { color: #ff3366; }
+#l5 { color: #ffffff; }
+#l6 { color: #ffffff; }
+
+/* Interactive Cursor marker */
+.cursor {
+    font-weight: 100;
+    animation: blinkCursor 0.8s infinite;
+}
+
+@keyframes blinkCursor { 50% { opacity: 0; } }
+
+@keyframes heartThrob {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+/* Canvas Container - Starts at full width to keep tree centered, then transitions to right side */
+.canvas-panel {
+    width: 100%; 
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    transition: width 1.2s ease-in-out; /* Smooth transition to the right side */
+}
+
+/* When this class is added, canvas box shrinks to 50% width on the right */
+.canvas-panel.shift-right {
+    width: 50%;
+}
+
+canvas {
+    width: 420px;
+    height: 500px;
+}
+
+/* Phone ke liye responsive code */
+@media (max-width: 768px) {
+    .fullscreen-animation-area {
+        width: 100%;
+        height: auto;
+        min-height: 80vh;
+        flex-direction: column-reverse; 
+        gap: 20px;
+    }
+    .workspace {
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+    .message-panel {
+        width: 100%;
+        padding: 0 20px;
+        font-size: 0.85rem; 
+    }
+    .canvas-panel {
+        width: 100%;
+    }
+    .canvas-panel.shift-right {
+        width: 100%; 
+    }
+    .start-screen {
+        width: 100%;
+        left: 50%;
+    }
+    canvas {
+        width: 320px; 
+        height: 380px;
+    }
+}
